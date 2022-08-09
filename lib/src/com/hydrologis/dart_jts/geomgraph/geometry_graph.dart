@@ -18,7 +18,7 @@ import 'edge_intersection.dart';
 import 'index.dart';
 import 'label.dart';
 import 'node.dart';
-import 'planargraph.dart';
+import 'planar_graph.dart';
 
 /**
  * A GeometryGraph is a graph that models a given Geometry

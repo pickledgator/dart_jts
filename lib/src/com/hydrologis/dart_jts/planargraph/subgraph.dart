@@ -1,7 +1,7 @@
 import 'dart:collection';
 import 'directed_edge.dart';
 import 'edge.dart';
-import 'planargraph.dart';
+import 'planar_graph.dart';
 import 'node_map.dart';
 
 /**

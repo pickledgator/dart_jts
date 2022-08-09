@@ -9,7 +9,7 @@ import '../geomgraph/directed_edge.dart';
 import '../geomgraph/directed_edge_star.dart';
 import '../geomgraph/edge_ring.dart';
 import '../geomgraph/node.dart';
-import '../geomgraph/planargraph.dart';
+import '../geomgraph/planar_graph.dart';
 import '../util/util.dart';
 import '../util/geom_impl.dart';
 

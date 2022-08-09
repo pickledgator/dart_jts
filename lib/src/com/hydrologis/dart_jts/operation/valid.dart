@@ -14,7 +14,7 @@ import '../geomgraph/geometry_graph.dart';
 import '../geomgraph/index.dart';
 import '../geomgraph/node.dart';
 import '../geomgraph/node_factory.dart';
-import '../geomgraph/planargraph.dart';
+import '../geomgraph/planar_graph.dart';
 import '../operation/overlay.dart';
 import '../util/util.dart';
 import 'relate.dart';

@@ -20,7 +20,7 @@ import '../geomgraph/directed_edge_star.dart';
 import '../geomgraph/edge.dart';
 import '../geomgraph/edge_list.dart';
 import '../geomgraph/node.dart';
-import '../geomgraph/planargraph.dart';
+import '../geomgraph/planar_graph.dart';
 import '../operation/valid.dart';
 import '../operation/overlay.dart';
 import '../noding/noding.dart';

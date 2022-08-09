@@ -4,7 +4,7 @@ import '../directed_edge_star.dart';
 import '../edge.dart';
 import '../graph_component.dart';
 import '../node.dart';
-import '../planargraph.dart';
+import '../planar_graph.dart';
 import '../subgraph.dart';
 
 /**

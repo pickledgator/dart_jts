@@ -1,4 +1,4 @@
-/// Entry point for the dart_jts library.
+// Extry point for the geometry graph classes
 library dart_jts.geomgraph;
 
 export 'src/com/hydrologis/dart_jts/geomgraph/depth.dart';
@@ -19,5 +19,5 @@ export 'src/com/hydrologis/dart_jts/geomgraph/label.dart';
 export 'src/com/hydrologis/dart_jts/geomgraph/node_factory.dart';
 export 'src/com/hydrologis/dart_jts/geomgraph/node_map.dart';
 export 'src/com/hydrologis/dart_jts/geomgraph/node.dart';
-export 'src/com/hydrologis/dart_jts/geomgraph/planargraph.dart';
+export 'src/com/hydrologis/dart_jts/geomgraph/planar_graph.dart';
 export 'src/com/hydrologis/dart_jts/geomgraph/topology_location.dart';

@@ -8,6 +8,5 @@ export 'src/com/hydrologis/dart_jts/planargraph/edge.dart';
 export 'src/com/hydrologis/dart_jts/planargraph/graph_component.dart';
 export 'src/com/hydrologis/dart_jts/planargraph/node_map.dart';
 export 'src/com/hydrologis/dart_jts/planargraph/node.dart';
-export 'src/com/hydrologis/dart_jts/planargraph/planar_graph2.dart';
-export 'src/com/hydrologis/dart_jts/planargraph/planargraph.dart';
+export 'src/com/hydrologis/dart_jts/planargraph/planar_graph.dart';
 export 'src/com/hydrologis/dart_jts/planargraph/subgraph.dart';
