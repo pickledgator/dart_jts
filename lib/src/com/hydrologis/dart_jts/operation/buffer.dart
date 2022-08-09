@@ -13,14 +13,21 @@ import '../geom/polygon.dart';
 import '../geom/multipolygon.dart';
 import '../geom/multipoint.dart';
 import '../geom/multilinestring.dart';
+import '../geom/position.dart';
 import '../geom/util.dart';
-import '../geomgraph/geomgraph.dart';
+import '../geomgraph/directed_edge.dart';
+import '../geomgraph/directed_edge_star.dart';
+import '../geomgraph/edge.dart';
+import '../geomgraph/edge_list.dart';
+import '../geomgraph/node.dart';
+import '../geomgraph/planargraph.dart';
 import '../operation/valid.dart';
 import '../operation/overlay.dart';
 import '../noding/noding.dart';
 import '../util.dart';
 import '../util/util.dart';
 import '../util/geom_impl.dart';
+import '../geomgraph/label.dart';
 
 /**
  * A value class containing the parameters which

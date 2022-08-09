@@ -13,8 +13,15 @@ import '../geom/multilinestring.dart';
 import '../geom/multipoint.dart';
 import '../geom/multipolygon.dart';
 import '../geom/util.dart';
-import '../geomgraph/geomgraph.dart';
+import '../geomgraph/edge.dart';
+import '../geomgraph/edge_end.dart';
+import '../geomgraph/edge_intersection.dart';
+import '../geomgraph/edge_intersection_list.dart';
+import '../geomgraph/geometry_graph.dart';
 import '../geomgraph/index.dart';
+import '../geomgraph/label.dart';
+import '../geomgraph/node.dart';
+import '../geomgraph/node_map.dart';
 import '../index/index.dart';
 import '../index/strtree.dart';
 import '../operation/valid.dart';
@@ -40,7 +47,7 @@ class RelateComputer {
   LineIntersector li = new RobustLineIntersector();
   PointLocator ptLocator = new PointLocator();
   List<GeometryGraph> arg; // the arg(s) of the operation
-  NodeMap nodes = new NodeMap(new RelateNodeFactory());
+  NodeMap nodes = NodeMap(new RelateNodeFactory());
 
   // this intersection matrix will hold the results compute for the relate
   IntersectionMatrix? im = null;

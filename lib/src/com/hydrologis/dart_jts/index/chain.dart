@@ -1,7 +1,7 @@
 import '../geom/coordinate.dart';
 import '../geom/envelope.dart';
 import '../geom/linestring.dart';
-import '../geomgraph/geomgraph.dart';
+import '../geom/quadrant.dart';
 
 /**
  * The action for the internal iterator for performing

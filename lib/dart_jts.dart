@@ -25,9 +25,6 @@ export 'src/com/hydrologis/dart_jts/geom/point.dart';
 export 'src/com/hydrologis/dart_jts/geom/polygon.dart';
 export 'src/com/hydrologis/dart_jts/geom/util.dart';
 
-export 'src/com/hydrologis/dart_jts/geomgraph/geomgraph.dart';
-export 'src/com/hydrologis/dart_jts/geomgraph/index.dart';
-
 export 'src/com/hydrologis/dart_jts/index/index.dart';
 export 'src/com/hydrologis/dart_jts/index/chain.dart';
 export 'src/com/hydrologis/dart_jts/index/strtree.dart';

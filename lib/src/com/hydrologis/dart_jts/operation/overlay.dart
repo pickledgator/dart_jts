@@ -5,7 +5,11 @@ import '../geom/geom.dart';
 import '../geom/geometry.dart';
 import '../geom/linestring.dart';
 import '../geom/polygon.dart';
-import '../geomgraph/geomgraph.dart';
+import '../geomgraph/directed_edge.dart';
+import '../geomgraph/directed_edge_star.dart';
+import '../geomgraph/edge_ring.dart';
+import '../geomgraph/node.dart';
+import '../geomgraph/planargraph.dart';
 import '../util/util.dart';
 import '../util/geom_impl.dart';
 

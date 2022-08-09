@@ -1,8 +1,18 @@
 import '../algorithm/algorithm.dart';
 import '../geom/coordinate.dart';
 import '../geom/geometry.dart';
+import '../geom/position.dart';
 import '../geom/util.dart';
-import '../geomgraph/geomgraph.dart';
+import '../geomgraph/edge.dart';
+import '../geomgraph/edge_end.dart';
+import '../geomgraph/edge_end_star.dart';
+import '../geomgraph/edge_intersection.dart';
+import '../geomgraph/edge_intersection_list.dart';
+import '../geomgraph/geometry_graph.dart';
+import '../geomgraph/label.dart';
+import '../geomgraph/node.dart';
+import '../geomgraph/node_factory.dart';
+import '../geomgraph/node_map.dart';
 import 'operation.dart';
 
 /**

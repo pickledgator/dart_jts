@@ -2,8 +2,10 @@ import 'dart:math' as math;
 import '../algorithm/algorithm.dart';
 import '../geom/coordinate.dart';
 import '../geom/envelope.dart';
+import '../geom/quadrant.dart';
 import '../io/io.dart';
-import 'geomgraph.dart';
+import 'edge.dart';
+import 'node.dart';
 
 class IntervalRTreeBranchNode extends IntervalRTreeNode {
   IntervalRTreeNode node1;
