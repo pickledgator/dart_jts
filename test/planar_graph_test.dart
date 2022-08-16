@@ -19,7 +19,7 @@ void main() {
           DirectedEdge(Node(Coordinate(0, 0), null), Node(Coordinate(10, 10), null), Coordinate(10, 10), true);
       DirectedEdge d2 =
           DirectedEdge(Node(Coordinate(20, 0), null), Node(Coordinate(20, 10), null), Coordinate(20, 10), false);
-      List<Edge> edges = DirectedEdge.toEdges([d1, d2]);
+      List<Edge?> edges = DirectedEdge.toEdges([d1, d2]);
       expect(2, edges.length);
       expect(edges[0], null);
       expect(edges[1], null);

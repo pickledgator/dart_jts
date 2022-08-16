@@ -21,10 +21,10 @@ class DirectedEdge extends GraphComponent implements Comparable {
    * Returns a List containing the parent Edge (possibly null) for each of the given
    * DirectedEdges
    */
-  static List<Edge> toEdges(List dirEdges) {
-    List<Edge> edges = [];
+  static List<Edge?> toEdges(List dirEdges) {
+    List<Edge?> edges = [];
     for (Iterator i = dirEdges.iterator; i.moveNext();) {
-      edges.add((i.current as DirectedEdge).getEdge()!);
+      edges.add((i.current as DirectedEdge).getEdge());
     }
     return edges;
   }
