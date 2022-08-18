@@ -256,7 +256,7 @@ class LineSequencer {
    * @param geom the geometry to test
    * @return <code>true</code> if the geometry is sequenced or is not lineal
    */
-  bool isSequenced(Geometry geom) {
+  static bool isSequenced(Geometry geom) {
     if (!(geom is MultiLineString)) {
       return true;
     }

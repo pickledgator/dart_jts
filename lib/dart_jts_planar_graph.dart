@@ -1,6 +1,7 @@
 // Extry point for the planar graph classes
 library dart_jts.planargraph;
 
+export 'src/com/hydrologis/dart_jts/operation/linemerge.dart';
 export 'src/com/hydrologis/dart_jts/planargraph/algorithm/connected_subgraph_finder.dart';
 export 'src/com/hydrologis/dart_jts/planargraph/directed_edge_star.dart';
 export 'src/com/hydrologis/dart_jts/planargraph/directed_edge.dart';
