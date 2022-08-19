@@ -58,6 +58,9 @@ class Coordinate implements Comparable<Coordinate> {
   /// Direct access to this field is discouraged; use {@link #getZ()}.
   late double z;
 
+  /// A unique identifier for the Coordinate
+  String id = "";
+
   ///  Constructs a <code>Coordinate</code> at (x,y,z).
   ///
   ///@param  x  the x-ordinate
@@ -69,6 +72,19 @@ class Coordinate implements Comparable<Coordinate> {
     this.z = z;
   }
 
+  ///  Constructs a <code>Coordinate</code> at (x,y,z) with id.
+  ///
+  ///@param  x  the x-ordinate
+  ///@param  y  the y-ordinate
+  ///@param  z  the z-ordinate
+  ///@param  id the id of the coordinate
+  Coordinate.fromXYZID(double x, double y, double z, String id) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.id = id;
+  }
+
   ///  Constructs a <code>Coordinate</code> at (0,0,NaN).
   Coordinate.empty2D() : this(0.0, 0.0);
 
@@ -76,7 +92,7 @@ class Coordinate implements Comparable<Coordinate> {
   ///  <code>other</code>.
   ///
   ///@param  c  the <code>Coordinate</code> to copy.
-  Coordinate.fromCoordinate(Coordinate c) : this.fromXYZ(c.x, c.y, c.getZ());
+  Coordinate.fromCoordinate(Coordinate c) : this.fromXYZID(c.x, c.y, c.getZ(), c.id);
 
   ///  Constructs a <code>Coordinate</code> at (x,y,NaN).
   ///
@@ -149,6 +165,18 @@ class Coordinate implements Comparable<Coordinate> {
   /// @param m the value to set as M
   void setM(double m) {
     throw ArgumentError("Invalid ordinate index: $M");
+  }
+
+  /// Gets the id of the Coordinate
+  String getID() {
+    return id;
+  }
+
+  /// Sets the unique id of the Coordinate
+  ///
+  /// @param id the id value to set
+  void setID(String id) {
+    this.id = id;
   }
 
   /// Gets the ordinate value for the given index.
@@ -294,6 +322,7 @@ class Coordinate implements Comparable<Coordinate> {
   }
 
   Object clone() {
+    // Note that the id will be the same when the clone is returned
     Coordinate coord = Coordinate.fromCoordinate(this);
     return coord; // return the clone
   }
@@ -302,6 +331,7 @@ class Coordinate implements Comparable<Coordinate> {
   ///
   /// @return a copy of this coordinate.
   Coordinate copy() {
+    // Note that the id will be the same when the copy is returned
     return Coordinate.fromCoordinate(this);
   }
 
