@@ -242,8 +242,10 @@ class LineSequencer {
   Geometry? _sequencedGeometry;
   bool _isSequenceable = false;
 
-  Geometry? sequence(Geometry geom) {
-    return getSequencedLineStrings();
+  static Geometry? sequence(Geometry geom) {
+    LineSequencer seq = LineSequencer();
+    seq.addGeometry(geom);
+    return seq.getSequencedLineStrings();
   }
 
   /**
