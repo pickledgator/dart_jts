@@ -154,6 +154,9 @@ abstract class Geometry implements Comparable {
   ///  The ID of the Spatial Reference System used by this <code>Geometry</code>
   int SRID = 0;
 
+  /// A unique identifier for this <code>Geometry</code>
+  String? id;
+
   /// An object reference which can be used to carry ancillary data defined
   /// by the client.
   Object? userData = null;
@@ -226,6 +229,20 @@ abstract class Geometry implements Comparable {
   ///  @see GeometryFactory
   void setSRID(int SRID) {
     this.SRID = SRID;
+  }
+
+  /// Returns the unique ID of the <code>Geometry</code>.
+  /// The uniqueness of the id is left to the user. Eg, a UUID.
+  ///
+  /// @return the ID of the <code>Geometry</code>
+  String? getId() {
+    return id;
+  }
+
+  /// Sets the unique ID of the <code>Geometry</code>.
+  /// The uniqueness of the id is left to the user. Eg, a UUID.
+  void setId(String id) {
+    this.id = id;
   }
 
   /// Gets the factory which contains the context in which this geometry was created.
@@ -1546,6 +1563,7 @@ abstract class Geometry implements Comparable {
   Geometry copy() {
     Geometry copy = copyInternal();
     copy.SRID = this.SRID;
+    copy.id = this.id;
     copy.userData = this.userData;
     return copy;
   }
