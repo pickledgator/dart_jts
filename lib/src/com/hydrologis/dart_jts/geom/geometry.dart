@@ -155,7 +155,7 @@ abstract class Geometry implements Comparable {
   int SRID = 0;
 
   /// A unique identifier for this <code>Geometry</code>
-  String? id;
+  String id = "";
 
   /// An object reference which can be used to carry ancillary data defined
   /// by the client.
@@ -235,7 +235,7 @@ abstract class Geometry implements Comparable {
   /// The uniqueness of the id is left to the user. Eg, a UUID.
   ///
   /// @return the ID of the <code>Geometry</code>
-  String? getId() {
+  String getId() {
     return id;
   }
 
