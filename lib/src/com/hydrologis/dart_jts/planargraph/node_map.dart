@@ -8,7 +8,7 @@ import 'node.dart';
  * @version 1.7
  */
 class NodeMap {
-  SplayTreeMap<Coordinate, Node> nodeMap = SplayTreeMap<Coordinate, Node>();
+  Map<Coordinate, Node> nodeMap = SplayTreeMap<Coordinate, Node>();
 
   /**
    * Constructs a NodeMap without any Nodes.
@@ -46,7 +46,7 @@ class NodeMap {
    * by angle with the positive x-axis.
    */
   Iterator iterator() {
-    return nodeMap.entries.iterator;
+    return nodeMap.values.iterator;
   }
 
   /**

@@ -13,9 +13,9 @@ import '../subgraph.dart';
  * <b>Note:</b> uses the <code>isVisited</code> flag on the nodes.
  */
 class ConnectedSubgraphFinder {
-  PlanarGraph graph;
+  PlanarGraph _graph;
 
-  ConnectedSubgraphFinder(this.graph);
+  ConnectedSubgraphFinder(this._graph);
 
   /**
    * Returns subgraphs that are connected
@@ -24,8 +24,8 @@ class ConnectedSubgraphFinder {
    */
   List getConnectedSubgraphs() {
     List<Subgraph> subgraphs = [];
-    GraphComponent.setVisitedIter(graph.nodeIterator(), false);
-    for (Iterator i = graph.edgeIterator(); i.moveNext();) {
+    GraphComponent.setVisitedIter(_graph.nodeIterator(), false);
+    for (Iterator i = _graph.edgeIterator(); i.moveNext();) {
       Edge e = i.current as Edge;
       Node node = e.getDirEdge(0).getFromNode();
       if (!node.isVisited()) {
@@ -43,7 +43,7 @@ class ConnectedSubgraphFinder {
    * @return The corresponding subgraph
    */
   Subgraph findSubgraph(Node node) {
-    Subgraph subgraph = Subgraph(graph);
+    Subgraph subgraph = Subgraph(_graph);
     addReachable(node, subgraph);
     return subgraph;
   }
@@ -72,8 +72,8 @@ class ConnectedSubgraphFinder {
    */
   void addEdges(Node node, ListQueue<Node> nodeStack, Subgraph subgraph) {
     node.setVisited(true);
-    for (Iterator i = (node.getOutEdges() as DirectedEdgeStar).iterator as Iterator; i.moveNext();) {
-      DirectedEdge de = i.current as DirectedEdge;
+    for (Iterator i = (node.getOutEdges() as DirectedEdgeStar).iterator(); i.moveNext();) {
+      DirectedEdge de = i.current;
       subgraph.add(de.getEdge()!);
       Node toNode = de.getToNode();
       if (!toNode.isVisited()) nodeStack.add(toNode); // push()

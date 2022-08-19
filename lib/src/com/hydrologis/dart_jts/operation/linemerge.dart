@@ -234,7 +234,7 @@ class LineMergeGraph extends PlanarGraph {
  * @version 1.7
  */
 class LineSequencer {
-  LineMergeGraph graph = new LineMergeGraph();
+  LineMergeGraph graph = LineMergeGraph();
   // initialize with default, in case no lines are input
   GeometryFactory factory = GeometryFactory.defaultPrecision();
   int lineCount = 0;
@@ -322,7 +322,9 @@ class LineSequencer {
   }
 
   void addLine(LineString lineString) {
-    factory = lineString.getFactory();
+    // if (factory == null) {
+    //   factory = lineString.getFactory();
+    // }
     // Note API difference here
     graph.addEdgefromLineString(lineString);
     lineCount++;
@@ -373,7 +375,7 @@ class LineSequencer {
     ConnectedSubgraphFinder csFinder = ConnectedSubgraphFinder(graph);
     List subgraphs = csFinder.getConnectedSubgraphs();
     for (Iterator i = subgraphs.iterator; i.moveNext();) {
-      Subgraph subgraph = i.current() as Subgraph;
+      Subgraph subgraph = i.current;
       if (hasSequence(subgraph)) {
         List seq = findSequence(subgraph);
         sequences.add(seq);
@@ -395,7 +397,7 @@ class LineSequencer {
   bool hasSequence(Subgraph graph) {
     int oddDegreeCount = 0;
     for (Iterator i = graph.nodeIterator(); i.moveNext();) {
-      Node node = i.current() as Node;
+      Node node = i.current;
       if (node.getDegree() % 2 == 1) oddDegreeCount++;
     }
     return oddDegreeCount <= 2;
@@ -411,8 +413,8 @@ class LineSequencer {
     DirectedEdge startDESym = startDE.getSym()!; // Force non-null
 
     // We use a special kotlin container here to get access to a list iterator
-    KtList<DirectedEdge> seq = KtList.from([]);
-    KtMutableListIterator lit = seq.listIterator() as KtMutableListIterator;
+    KtMutableList<DirectedEdge> seq = KtMutableList.from([]);
+    KtMutableListIterator lit = seq.listIterator();
     addReverseSubpath(startDESym, lit, false);
     while (lit.hasPrevious()) {
       DirectedEdge prev = lit.previous();
@@ -441,7 +443,7 @@ class LineSequencer {
   static DirectedEdge? findUnvisitedBestOrientedDE(Node node) {
     DirectedEdge? wellOrientedDE;
     DirectedEdge? unvisitedDE;
-    for (Iterator i = node.getOutEdges()!.iterator as Iterator; i.moveNext();) {
+    for (Iterator i = node.getOutEdges()!.iterator(); i.moveNext();) {
       DirectedEdge de = i.current as DirectedEdge;
       if (!de.getEdge()!.isVisited()) {
         unvisitedDE = de;
@@ -564,23 +566,24 @@ class LineSequencer {
    * @return the sequenced geometry, or <code>null</code> if no sequence exists
    */
   Geometry buildSequencedGeometry(List sequences) {
-    List lines = [];
+    List<LineString> lines = [];
 
     for (Iterator i1 = sequences.iterator; i1.moveNext();) {
-      List seq = i1.current as List;
+      List seq = i1.current;
       for (Iterator i2 = seq.iterator; i2.moveNext();) {
         DirectedEdge de = i2.current as DirectedEdge;
         LineMergeEdge e = de.getEdge() as LineMergeEdge;
         LineString line = e.getLine();
-
         LineString lineToAdd = line;
-        if (!de.getEdgeDirection() && !line.isClosed()) lineToAdd = reverseLineString(line);
-
+        if (!de.getEdgeDirection() && !line.isClosed()) {
+          lineToAdd = reverseLineString(line);
+        }
         lines.add(lineToAdd);
       }
     }
-    if (lines.length == 0) return factory.createMultiLineString([]);
-    return factory.buildGeometry(lines as List<Geometry>);
+    if (lines.length == 0) return factory.createMultiLineStringEmpty();
+    // TODO: Figure out why factory.buildGeometry(lines) doesn't work here
+    return factory.createMultiLineString(lines);
   }
 
   /**
@@ -604,138 +607,3 @@ class DirectedEdgeEntryItem extends LinkedListEntry<DirectedEdgeEntryItem> {
     return '$edge';
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-// /**
-//  * Merges a collection of linear components to form maximal-length linestrings. 
-//  * <p> 
-//  * Merging stops at nodes of degree 1 or degree 3 or more.
-//  * In other words, all nodes of degree 2 are merged together. 
-//  * The exception is in the case of an isolated loop, which only has degree-2 nodes.
-//  * In this case one of the nodes is chosen as a starting point.
-//  * <p> 
-//  * The direction of each
-//  * merged LineString will be that of the majority of the LineStrings from which it
-//  * was derived.
-//  * <p>
-//  * Any dimension of Geometry is handled - the constituent linework is extracted to 
-//  * form the edges. The edges must be correctly noded; that is, they must only meet
-//  * at their endpoints.  The LineMerger will accept non-noded input
-//  * but will not merge non-noded edges.
-//  * <p>
-//  * Input lines which are empty or contain only a single unique coordinate are not included
-//  * in the merging.
-//  *
-//  * @version 1.7
-//  */
-
-// class LineMerger {
-//   LineMergeGraph graph = LineMergeGraph();
-// }
-
-// /**
-//  * A planar graph of edges that is analyzed to sew the edges together. The 
-//  * <code>marked</code> flag on {@link org.locationtech.jts.planargraph.Edge}s
-//  * and {@link org.locationtech.jts.planargraph.Node}s indicates whether they have been
-//  * logically deleted from the graph.
-//  *
-//  * @version 1.7
-//  */
-// class LineMergeGraph extends PlanarGraph {
-//   /**
-//    * Adds an Edge, DirectedEdges, and Nodes for the given LineString representation
-//    * of an edge. 
-//    * Empty lines or lines with all coordinates equal are not added.
-//    * 
-//    * @param lineString the linestring to add to the graph
-//    */
-//   void addEdge(LineString lineString) {
-//     if (lineString.isEmpty()) {
-//       return;
-//     }
-
-//     List<Coordinate> coordinates = CoordinateArrays.removeRepeatedPoints(lineString.getCoordinates());
-
-//     // don't add lines with all coordinates equal
-//     if (coordinates.length <= 1) {
-//       return;
-//     }
-
-//     Coordinate startCoordinate = coordinates[0];
-//     Coordinate endCoordinate = coordinates[coordinates.length - 1];
-//     Node startNode = getNode(startCoordinate);
-//     Node endNode = getNode(endCoordinate);
-//     DirectedEdge directedEdge0 = LineMergeDirectedEdge(startNode, endNode, coordinates[1], true);
-//     DirectedEdge directedEdge1 = LineMergeDirectedEdge(endNode, startNode, coordinates[coordinates.length - 2], false);
-//     Edge edge = LineMergeEdge(lineString);
-//     edge.setDirectedEdges(directedEdge0, directedEdge1);
-//     super.add(edge);
-//   }
-
-//   Node getNode(Coordinate coordinate) {
-//     // Note that PlanarGraph implements find instead of findNode here
-//     Node? node = super.find(coordinate);
-//     if (node == null) {
-//       node = Node(coordinate, null);
-//       // Note PlanarGraph uses addNode instead of add(Node) here
-//       super.addNode(node);
-//     }
-//     return node;
-//   }
-// }
-
-// /**
-//  * An edge of a {@link LineMergeGraph}. The <code>marked</code> field indicates
-//  * whether this Edge has been logically deleted from the graph.
-//  *
-//  * @version 1.7
-//  */
-// class LineMergeEdge extends Edge {
-//   LineString line;
-
-//   /**
-//    * Constructs a LineMergeEdge with vertices given by the specified LineString.
-//    */
-//   LineMergeEdge(LineString line)
-//       : this.line = line,
-//         super(line.getCoordinates(), /* label = */ null) {}
-
-//   /**
-//    * Returns the LineString specifying the vertices of this edge.
-//    */
-//   LineString getLine() {
-//     return this.line;
-//   }
-// }
-
-// /**
-//  * A {@link org.locationtech.jts.planargraph.DirectedEdge} of a 
-//  * {@link LineMergeGraph}. 
-//  *
-//  * @version 1.7
-//  */
-// class LineMergeDirectedEdge extends DirectedEdge {
-//   /**
-//    * Constructs a LineMergeDirectedEdge connecting the <code>from</code> node to the
-//    * <code>to</code> node.
-//    *
-//    * @param directionPt
-//    *                  specifies this DirectedEdge's direction (given by an imaginary
-//    *                  line from the <code>from</code> node to <code>directionPt</code>)
-//    * @param edgeDirection
-//    *                  whether this DirectedEdge's direction is the same as or
-//    *                  opposite to that of the parent Edge (if any)
-//    */
-//   LineMergeDirectedEdge(Node from, Node to, Coordinate directionPt, bool edgeDirection)
-//       : super(from, to, directionPt, edgeDirection) {}
-// }
