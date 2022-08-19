@@ -695,4 +695,64 @@ class LineMerger {
       mergedLineStrings!.add(edgeString.toLineString());
     }
   }
+
+  void buildEdgeStringsForObviousStartNodes() {
+    buildEdgeStringsForNonDegree2Nodes();
+  }
+
+  void buildEdgeStringsForIsolatedLoops() {
+    buildEdgeStringsForUnprocessedNodes();
+  }
+
+  void buildEdgeStringsForUnprocessedNodes() {
+    for (Iterator i = graph.getNodes().iterator; i.moveNext();) {
+      Node node = i.current;
+      if (!node.isMarked()) {
+        assert(node.getDegree() == 2);
+        buildEdgeStringsStartingAt(node);
+        node.setMarked(true);
+      }
+    }
+  }
+
+  void buildEdgeStringsForNonDegree2Nodes() {
+    for (Iterator i = graph.getNodes().iterator; i.moveNext();) {
+      Node node = i.current;
+      if (node.getDegree() != 2) {
+        buildEdgeStringsStartingAt(node);
+        node.setMarked(true);
+      }
+    }
+  }
+
+  void buildEdgeStringsStartingAt(Node node) {
+    for (Iterator i = node.getOutEdges()!.iterator(); i.moveNext();) {
+      LineMergeDirectedEdge directedEdge = i.current;
+      if (directedEdge.getEdge()!.isMarked()) {
+        continue;
+      }
+      edgeStrings.add(buildEdgeStringStartingWith(directedEdge));
+    }
+  }
+
+  EdgeString buildEdgeStringStartingWith(LineMergeDirectedEdge? start) {
+    EdgeString edgeString = EdgeString(factory!);
+    LineMergeDirectedEdge? current = start;
+    do {
+      edgeString.add(current!);
+      current.getEdge()!.setMarked(true);
+      current = current.getNext();
+    } while (current != null && current != start);
+    return edgeString;
+  }
+
+  /**
+   * Gets the {@link LineString}s created by the merging process.
+   * 
+   * @return the collection of merged LineStrings
+   */
+  List<LineString>? getMergedLineStrings() {
+    merge();
+    return mergedLineStrings;
+  }
 }

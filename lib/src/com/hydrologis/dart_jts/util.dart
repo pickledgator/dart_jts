@@ -43,18 +43,23 @@ class CollectionsUtils {
   /// Removes subsequent equal items from a [list].
   static List<T> removeRepeated<T>(List<T> list) {
     List<T> newList = [];
+    // Copy the first element over to get started
+    newList.add(list[0]);
+    // If we only had one element in the list, just return the new list since there's no work to be done
+    if (list.length == 1) {
+      return newList;
+    }
+    // Now we assume we have at least two elements in the list
+    // iterate over index 1+ and check if neighboring elements are the unique
     for (int i = 1; i < list.length; i++) {
       if (list[i - 1] != list[i]) {
-        newList.add(list[i - 1]);
+        newList.add(list[i]);
       }
-    }
-    if (newList.last != list.last) {
-      newList.add(list.last);
     }
     return newList;
   }
 
-  /// CHecks if there are subsequent repeating items.
+  /// Checks if there are subsequent repeating items.
   static bool hasRepeated<T>(List<T> list) {
     for (var i = 1; i < list.length; i++) {
       if (list[i - 1] == list[i]) {
