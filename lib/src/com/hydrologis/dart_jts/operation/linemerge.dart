@@ -583,9 +583,11 @@ class LineSequencer {
         lines.add(lineToAdd);
       }
     }
-    if (lines.length == 0) return factory.createMultiLineStringEmpty();
-    // TODO: Figure out why factory.buildGeometry(lines) doesn't work here
-    return factory.createMultiLineString(lines);
+    if (lines.length == 0) {
+      return factory.createMultiLineStringEmpty();
+    }
+
+    return factory.buildGeometry(lines);
   }
 
   /**
