@@ -1,4 +1,5 @@
-part of dart_jts;
+import 'dart:math' as math;
+import '../util.dart';
 
 /// A lightweight class used to store coordinates on the 2-dimensional Cartesian plane.
 /// <p>
@@ -57,6 +58,9 @@ class Coordinate implements Comparable<Coordinate> {
   /// Direct access to this field is discouraged; use {@link #getZ()}.
   late double z;
 
+  /// A unique identifier for the Coordinate
+  String id = "";
+
   ///  Constructs a <code>Coordinate</code> at (x,y,z).
   ///
   ///@param  x  the x-ordinate
@@ -68,6 +72,19 @@ class Coordinate implements Comparable<Coordinate> {
     this.z = z;
   }
 
+  ///  Constructs a <code>Coordinate</code> at (x,y,z) with id.
+  ///
+  ///@param  x  the x-ordinate
+  ///@param  y  the y-ordinate
+  ///@param  z  the z-ordinate
+  ///@param  id the id of the coordinate
+  Coordinate.fromXYZID(double x, double y, double z, String id) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.id = id;
+  }
+
   ///  Constructs a <code>Coordinate</code> at (0,0,NaN).
   Coordinate.empty2D() : this(0.0, 0.0);
 
@@ -75,7 +92,7 @@ class Coordinate implements Comparable<Coordinate> {
   ///  <code>other</code>.
   ///
   ///@param  c  the <code>Coordinate</code> to copy.
-  Coordinate.fromCoordinate(Coordinate c) : this.fromXYZ(c.x, c.y, c.getZ());
+  Coordinate.fromCoordinate(Coordinate c) : this.fromXYZID(c.x, c.y, c.getZ(), c.id);
 
   ///  Constructs a <code>Coordinate</code> at (x,y,NaN).
   ///
@@ -150,6 +167,18 @@ class Coordinate implements Comparable<Coordinate> {
     throw ArgumentError("Invalid ordinate index: $M");
   }
 
+  /// Gets the id of the Coordinate
+  String getID() {
+    return id;
+  }
+
+  /// Sets the unique id of the Coordinate
+  ///
+  /// @param id the id value to set
+  void setID(String id) {
+    this.id = id;
+  }
+
   /// Gets the ordinate value for the given index.
   ///
   /// The base implementation supports values for the index are
@@ -188,8 +217,7 @@ class Coordinate implements Comparable<Coordinate> {
         y = value;
         break;
       case Z:
-        setZ(
-            value); // delegate to subclass rather than offer direct field access
+        setZ(value); // delegate to subclass rather than offer direct field access
         break;
       default:
         throw new ArgumentError("Invalid ordinate index: $ordinateIndex");
@@ -236,9 +264,7 @@ class Coordinate implements Comparable<Coordinate> {
   ///@return true if <code>other</code> is a <code>Coordinate</code>
   ///      with the same values for X, Y and Z.
   bool equals3D(Coordinate other) {
-    return (x == other.x) &&
-        (y == other.y) &&
-        ((getZ() == other.getZ()) || (getZ().isNaN && other.getZ().isNaN));
+    return (x == other.x) && (y == other.y) && ((getZ() == other.getZ()) || (getZ().isNaN && other.getZ().isNaN));
   }
 
   /// Tests if another coordinate has the same value for Z, within a tolerance.
@@ -296,6 +322,7 @@ class Coordinate implements Comparable<Coordinate> {
   }
 
   Object clone() {
+    // Note that the id will be the same when the clone is returned
     Coordinate coord = Coordinate.fromCoordinate(this);
     return coord; // return the clone
   }
@@ -304,6 +331,7 @@ class Coordinate implements Comparable<Coordinate> {
   ///
   /// @return a copy of this coordinate.
   Coordinate copy() {
+    // Note that the id will be the same when the copy is returned
     return Coordinate.fromCoordinate(this);
   }
 

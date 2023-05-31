@@ -21,6 +21,36 @@ void main() {
 
       expect(expectedList1, shiftedList);
     });
+    test("remove repeated", () {
+      var list = [1, 1, 2, 2, 4];
+      var expectedList = [1, 2, 4];
+      var res = CollectionsUtils.removeRepeated(list);
+      expect(expectedList, res);
+    });
+    test("remove repeated 1 element", () {
+      var list = [1];
+      var expectedList = [1];
+      var res = CollectionsUtils.removeRepeated(list);
+      expect(expectedList, res);
+    });
+    test("remove repeated 2 element", () {
+      var list = [1, 1];
+      var expectedList = [1];
+      var res = CollectionsUtils.removeRepeated(list);
+      expect(expectedList, res);
+    });
+    test("remove repeated 2 element unique", () {
+      var list = [1, 2];
+      var expectedList = [1, 2];
+      var res = CollectionsUtils.removeRepeated(list);
+      expect(expectedList, res);
+    });
+    test("remove repeated not neighbors", () {
+      var list = [1, 2, 1];
+      var expectedList = [1, 2, 1];
+      var res = CollectionsUtils.removeRepeated(list);
+      expect(expectedList, res);
+    });
   });
 
   group("StringUtils - ", () {
